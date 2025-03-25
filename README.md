@@ -76,7 +76,6 @@ A API do **Google Gemini** será utilizada pelo no Projeto Delivery de Alimentos
 1. Criar um projeto no [Google Cloud Console](https://console.cloud.google.com)
 2. Ativar a **API do Gemini** e gerar uma **chave de API (APi KEY)**
 3. Adicionar a chave de API e a URL da API em variáveis de ambiente no Projeto Delivery de Alimentos
-4. Criar um serviço para consumir e processar os dados da resposta da API do Gemini
 
 <br />
 
