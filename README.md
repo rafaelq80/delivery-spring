@@ -61,6 +61,8 @@ $$
 \text{NutriScore} = \text{Soma dos Pontos Negativos} - \text{Soma dos Pontos Positivos}
 $$
 
+Para mais detalhes, acesse a documentação do serviço NutriScoreService **[clicando aqui](calculo_nutriscore.md)**.
+
 <br />
 
 ## 4. Integração com a API - Google Gemini

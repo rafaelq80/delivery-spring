@@ -44,6 +44,11 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoService.findAllByNome(nome));
 	}
 
+	@GetMapping("/saudaveis/all")
+	public ResponseEntity<List<Produto>> getByNutriscore() {
+		return ResponseEntity.ok(produtoService.findAllByNutriscore());
+	}
+	
 	@PostMapping
 	public ResponseEntity<Produto> postProduto(@Valid @RequestBody Produto produto) {
 		try {

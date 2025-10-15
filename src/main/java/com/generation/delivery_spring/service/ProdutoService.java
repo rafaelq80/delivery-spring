@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.generation.delivery_spring.model.Produto;
 import com.generation.delivery_spring.repository.CategoriaRepository;
@@ -39,6 +38,10 @@ public class ProdutoService {
 		return produtoRepository.findAllByNomeContainingIgnoreCase(nome);
 	}
 
+	public List<Produto> findAllByNutriscore() {
+		return produtoRepository.findAllByNutriscoreIn(List.of("A", "B"));
+	}
+	
 	public Produto cadastrar(Produto produto) {
 
 		if (produto == null) {
@@ -86,16 +89,21 @@ public class ProdutoService {
 	}
 	
 	private void definirNutriscore(Produto produto) {
-		try {
-			var nutriScore = nutriScoreService.pesquisarNutriScore(produto.getNome());
+	    try {
+	        // Chama o serviço e obtém o resultado do NutriScore
+	        var resultado = nutriScoreService.pesquisarNutriScore(produto.getNome());
 
-			if (StringUtils.hasText(nutriScore))
-				produto.setNutriscore(nutriScore);
-			else
-				produto.setNutriscore("");
+	        // Acessa a classificação diretamente do record ResultadoNutriScore
+	        if (resultado != null && resultado.classificacao() != null && !resultado.classificacao().isBlank()) {
+	            produto.setNutriscore(resultado.classificacao());
+	        } else {
+	            produto.setNutriscore("");
+	        }
 
-		} catch (Exception e) {
-			logger.error("Erro ao calcular NutriScore para o produto: {}", produto.getNome(), e);
-		}
+	    } catch (Exception e) {
+	        logger.error("Erro ao calcular NutriScore para o produto: {}", produto.getNome(), e);
+	        produto.setNutriscore(""); // Garante valor padrão em caso de erro
+	    }
 	}
+
 }

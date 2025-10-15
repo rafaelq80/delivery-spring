@@ -31,7 +31,7 @@ public class Categoria {
 	private String icone;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("categoria")
+	@JsonIgnoreProperties(value = "categoria", allowSetters = true)
 	private List<Produto> produto;
 
 	public Categoria() {
