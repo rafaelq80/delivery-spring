@@ -104,9 +104,4 @@ public class UsuarioService {
 		return "Bearer " + jwtService.generateToken(usuario);
 	}
 
-	public Double calcularImc(Double peso, Double altura) {
-
-		return peso / (altura * altura);
-
-	}
 }
