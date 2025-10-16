@@ -98,6 +98,66 @@ Obtenha uma chave gratuita em: https://ai.google.dev/
 </dependency>
 ```
 
+## Formato do JSON Enviado para Gemini
+
+O serviço envia um JSON estruturado com o prompt (pergunta) para a API Gemini:
+
+```json
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "Forneça informações nutricionais médias por 100g do prato pizza..."
+        }
+      ]
+    }
+  ]
+}
+```
+
+**O que é enviado:**
+
+- `contents` → lista com o conteúdo
+- `parts` → partes do conteúdo (sempre com o texto da pergunta)
+- `text` → a pergunta completa com dados do usuário
+
+## Formato do JSON Retornado pela Gemini
+
+A API Gemini retorna um JSON complexo com os dados nutricionais do prato no formato abaixo:
+
+```json
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "Pizza (100g):\nValor energético: 266 kcal\nAçúcares totais: 3.6 g\n..."
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+## Formato do Resultado Retornado pelo Serviço
+
+O serviço processa o JSON acima e retorna os dados na forma de um texto simples:
+
+```java
+Valor energético: 266 kcal
+Açúcares totais: 3,6 g
+Gorduras saturadas: 4,5 g
+Sódio: 598 mg
+Proteínas: 11,2 g
+Fibras alimentares: 2,3 g
+% de frutas, legumes e oleaginosas: 15%
+```
+
+Estes texto depois será transformado em um objeto da Classe `DadosNutricionais`, pelo método `extrairDadosNutricionais`.
+
 ## Tratamento de Erros
 
 O serviço lança uma exceção `GeminiApiException` quando:
